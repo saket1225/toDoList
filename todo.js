@@ -9,18 +9,7 @@ function addToDo () {
 
     if (input.length >= 1) {
 
-        // let element = document.createElement("input")
-        // element.classList.add("todoListCard")
-        // element.classList.add("incompleted")
-        // element.classList.add("incompleted")
-        // element.setAttribute("type", "text");
-        // element.setAttribute("maxlength", "80");
-        // element.value = input;
-
-
-        // todoListDiv.prepend(element)
-
-        var element = `<center><div class=\"todoList\"><input class=\"todoListCard\" type=\"text\" maxlength=\"80\" value=\"${input}\"></input><img src=\"images/checkbox.svg\" class=\"tick\"><img src=\"images/delete.svg\" class=\"delete\"></div></center>`
+        var element = `<center><div class=\"todoList incompletetodo\"><input class=\"todoListCard\" type=\"text\" maxlength=\"80\" value=\"${input}\"></input><img src=\"images/checkbox.svg\" class=\"tick\"><img src=\"images/delete.svg\" class=\"delete\"></div></center>`
 
         todoListDiv.innerHTML = element + todoListDiv.innerHTML
     }
@@ -48,6 +37,7 @@ function completed() {
     for (const completedIcon of completedIcons){
             completedIcon.addEventListener("click", ()=>{
                 completedIcon.parentNode.classList.add("completedToDo")
+                completedIcon.parentNode.classList.remove("incompletetodo")
 
                 completedIcon.previousSibling.classList.add("completedToDoText")
             })
@@ -69,4 +59,39 @@ document.addEventListener("keypress", (e)=>{
     }
 })
 
+let filterDropdown = document.querySelector(".displayType")
 
+function filter() {
+    const divs = document.querySelectorAll('.todoList');
+
+    if (filterDropdown.value == "completed"){
+        divs.forEach((div) => {
+            if (div.classList.contains('incompletetodo')){
+                div.style.display = 'none'
+            }
+
+            else {
+                div.style.display = 'block'
+            }
+        })
+    }
+
+
+    else if (filterDropdown.value == "incompleted"){
+        divs.forEach((div) => {
+            if (div.classList.contains('completedToDo')){
+                div.style.display = 'none'
+            }
+
+            else {
+                div.style.display = 'block'
+            }
+        })
+    }
+
+        else {
+            divs.forEach((div) => {
+                div.style.display = 'block'
+        })
+    }
+}
